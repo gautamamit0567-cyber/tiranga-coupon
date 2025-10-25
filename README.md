@@ -1,1 +1,290 @@
-# tiranga-coupon
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Republic Day 2026 Countdown</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to bottom, 
+                #FF9933 0%, 
+                #FF9933 33.33%, 
+                #FFFFFF 33.33%, 
+                #FFFFFF 66.66%, 
+                #138808 66.66%, 
+                #138808 100%);
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.1));
+            pointer-events: none;
+        }
+
+        .coin {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 1), 0 0 30px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 165, 0, 0.6);
+            animation: fall linear infinite;
+            opacity: 1;
+            z-index: 20;
+        }
+
+        .coin::before {
+            content: '₹';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            font-weight: bold;
+            color: #8B4513;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .peacock {
+            position: absolute;
+            font-size: 80px;
+            opacity: 0.85;
+            filter: drop-shadow(0 0 20px rgba(0, 128, 255, 0.9)) drop-shadow(0 0 30px rgba(100, 200, 255, 0.6));
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .peacock-left {
+            left: 5%;
+            top: 20%;
+            animation-delay: 0s;
+        }
+
+        .peacock-right {
+            right: 5%;
+            top: 60%;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-30px);
+            }
+        }
+
+        .ashoka-chakra {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150px;
+            height: 150px;
+            opacity: 0.15;
+            animation: rotate 60s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .container {
+            text-align: center;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.35);
+            padding: 60px 80px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #FF9933, #138808);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 40px;
+        }
+
+        .countdown {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .time-unit {
+            background: linear-gradient(135deg, #FF9933, #138808);
+            padding: 30px 25px;
+            border-radius: 15px;
+            min-width: 120px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .time-unit:hover {
+            transform: translateY(-10px);
+        }
+
+        .number {
+            font-size: 3em;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .label {
+            font-size: 1em;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 10px;
+        }
+
+        .date-info {
+            margin-top: 40px;
+            font-size: 1.3em;
+            color: #138808;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="peacock peacock-left">🦚</div>
+    <div class="peacock peacock-right">🦚</div>
+
+    <svg class="ashoka-chakra" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="45" fill="none" stroke="#000080" stroke-width="2"/>
+        <circle cx="50" cy="50" r="5" fill="#000080"/>
+        <g id="spokes">
+            <line x1="50" y1="50" x2="50" y2="5" stroke="#000080" stroke-width="1.5"/>
+        </g>
+    </svg>
+
+    <script>
+        const spokesGroup = document.getElementById('spokes');
+        const spoke = spokesGroup.querySelector('line');
+        for (let i = 1; i < 24; i++) {
+            const newSpoke = spoke.cloneNode();
+            newSpoke.setAttribute('transform', `rotate(${i * 15} 50 50)`);
+            spokesGroup.appendChild(newSpoke);
+        }
+
+        // Create falling coins
+        function createCoin() {
+            const coin = document.createElement('div');
+            coin.className = 'coin';
+            coin.style.left = Math.random() * 100 + '%';
+            coin.style.animationDuration = (Math.random() * 2 + 5) + 's';
+            coin.style.animationDelay = Math.random() * 1 + 's';
+            document.body.appendChild(coin);
+            
+            setTimeout(() => {
+                coin.remove();
+            }, 8000);
+        }
+
+        setInterval(createCoin, 300);
+        for (let i = 0; i < 15; i++) {
+            setTimeout(createCoin, i * 150);
+        }
+    </script>
+
+    <div class="container">
+        <h1>Tiranga Coupon</h1>
+        <p class="subtitle">Winners will be announced in</p>
+        
+        <div class="countdown">
+            <div class="time-unit">
+                <div class="number" id="days">00</div>
+                <div class="label">Days</div>
+            </div>
+            <div class="time-unit">
+                <div class="number" id="hours">00</div>
+                <div class="label">Hours</div>
+            </div>
+            <div class="time-unit">
+                <div class="number" id="minutes">00</div>
+                <div class="label">Minutes</div>
+            </div>
+            <div class="time-unit">
+                <div class="number" id="seconds">00</div>
+                <div class="label">Seconds</div>
+            </div>
+        </div>
+        
+        <div class="date-info">India's Most Trusted Coupon System</div>
+    </div>
+
+    <script>
+        function updateCountdown() {
+            const targetDate = new Date('January 26, 2026 00:00:00').getTime();
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                document.getElementById('days').textContent = String(days).padStart(2, '0');
+                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+            } else {
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = '00';
+                document.querySelector('.subtitle').textContent = 'Happy Republic Day! 🇮🇳';
+            }
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
